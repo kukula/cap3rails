@@ -56,10 +56,14 @@ Check acceess to server
 cat ~/.ssh/id_rsa.pub | ssh deployer@my-mega-project.com 'cat >> ~/.ssh/authorized_keys'
 ```
 
+#### Extend your nginx config with:
+
+```include /var/www/USER/data/www/MY_APP/shared/web_server/nginx/config;```
+
 #### Let's play!
 
 ```sh
-cap ENV_NAME TASC_NAME
+cap ENV_NAME TASK_NAME
 ```
 
 For example:
@@ -76,6 +80,12 @@ cap production info:gemset
 
 ```sh
 cap production deploy
+```
+
+#### Nginx restart
+
+```sh
+cap production nginx:restart
 ```
 
 #### Destroy App
