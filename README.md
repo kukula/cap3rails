@@ -6,6 +6,7 @@
 2. I want to have independent deploy tool for many rails apps
 3. I want to restrict access to deploy tool in team. Juniors are shouldn't touch it.
 4. It's should be easy to maintain and improve
+5. It's should be base for branches: **cap3node**, **cap3django**, **cap3php** etc.
 
 #### How to use?
 
