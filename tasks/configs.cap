@@ -1,0 +1,31 @@
+namespace :configs do  
+  desc "cap production configs:copy"
+  task :copy do
+    on roles(:all) do
+      web_server_dir = fetch :web_server_dir
+
+      template "database.yml", "#{ fetch(:configs_dir) }/database.yml"
+      
+      %w[
+        nginx/config
+        unicorn/server
+        unicorn/config.rb
+      ].each{ |file| template file, "#{web_server_dir}/#{file}" }
+
+      execute :chmod, '744', "#{ web_server_dir }/unicorn/server"
+
+      info "Configs files copied"
+    end
+  end
+
+  desc "cap production configs:dir"
+  task :dir do
+    on roles(:all) do
+      web_server_dir = fetch :web_server_dir
+
+      execute :mkdir, '-p', web_server_dir
+      execute :mkdir, '-p', "#{web_server_dir}/nginx"
+      execute :mkdir, '-p', "#{web_server_dir}/unicorn"
+    end
+  end
+end

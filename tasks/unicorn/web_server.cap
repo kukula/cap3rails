@@ -1,0 +1,13 @@
+namespace :web_server do
+  # cap production web_server:start
+  %w[start restart stop force force-stop].each do |action|
+    desc "cap production web_server:#{action}"
+    task action do
+      on roles(:all) do
+        within fetch(:web_server_dir) do
+          execute "./unicorn/server", action
+        end
+      end
+    end    
+  end
+end

@@ -1,0 +1,15 @@
+namespace :nginx do
+  # cap production nginx:restart
+  %w[start stop restart reload force-reload status configtest].each do |cmd|
+    desc "cap production nginx:#{cmd}"
+    task cmd do
+      server Configs.role.sudo.address,
+        roles: %w[ nginx ],
+        ssh_options: Configs.role.sudo.ssh.to_hash.symbolize_keys
+
+      on roles(:nginx) do
+        execute "/etc/init.d/nginx #{cmd}"
+      end
+    end
+  end
+end

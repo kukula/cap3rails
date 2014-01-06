@@ -1,0 +1,43 @@
+# <% app_name = "my-mega-project.com"            %>
+# <% home     = "/var/www/mega-project.com/data" %>
+configs:
+  web_server: unicorn
+
+  rvm:
+    ruby:   ruby-2.0.0-p247
+    gemset: cap3
+
+  defaults:
+    ssh: &ssh_defaults
+      password:
+      auth_methods:
+        - publickey
+        - password
+      forward_agent: true
+
+  unicorn:
+    socket_name: mega_project_socket
+    workers: 4
+
+  role:
+    app:
+      address: my-mega-project.com
+      home: <%= home %>
+      name: <%= app_name %>
+      deploy_to: "<%= home %>/www/<%= app_name %>"
+
+      ssh: 
+        <<: *ssh_defaults
+        user: deployer
+
+    sudo:
+      address: my-mega-project.com
+      ssh:
+        <<: *ssh_defaults
+        user: root
+
+  db:
+    name:     mega_project_production
+    username: mega_db_owner
+    password: SupeRSECretPass
+    adapter:  mysql2

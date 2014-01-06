@@ -1,0 +1,10 @@
+production:
+  database:  <%= Configs.db.name     %>
+  adapter:   <%= Configs.db.adapter  %>
+  username:  <%= Configs.db.username %>
+  password:  <%= Configs.db.password %>
+
+  host:      localhost
+  encoding:  utf8
+  reconnect: true
+  timeout:   5000

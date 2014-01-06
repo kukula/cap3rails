@@ -1,0 +1,17 @@
+namespace :info do
+  desc "cap production info:image_magick"
+  task :image_magick do
+    on roles(:all) do
+      execute "convert --version"
+    end
+  end
+
+  desc "cap production info:gemset"
+  task :gemset do
+    on roles(:all) do
+      execute "rvm gemset list"
+      execute "rvm gemset name"
+      execute "gem list"
+    end
+  end
+end
