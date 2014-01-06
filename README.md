@@ -10,44 +10,108 @@
 #### How to use?
 
 1. Clone cap3rails
-2. Copy config file ```cp settings/production.yml.example settings/production.yml```
+2. Copy config file
+```cp settings/production.yml.example settings/production.yml```
 3. Puts your settings in config file
 4. ```cap production deploy```
-5. ...
-6. Profit!
+5. Include App nginx config into your main nginx config
+```include /var/www/USER/data/www/MY_APP/shared/web_server/nginx/config;```
+6. restart nginx ```/etc/init.d/nginx restart``` or ```service nginx restart```
+7. Profit!
 
-#### Авторизировать публичный ключ на удаленном сервере
+#### Who in the box?
+
+1. **Settingslogic** for config files
+2. **Nginx**, **Unicorn** config templates
+3. Only **production** stage
+4. Ready for small projects, but not for giants
+
+#### Status of repo
+
+It's a draft. It's need a lot of work, but it'a alive! You can try it.
+
+#### Plans
+
+1. To improve Unicorn configs
+2. To add Monit configs
+3. To drink tea with piece of chocolate
+
+### Workflow
+
+#### Access to server
+
+Check acceess to server
+
+```ssh root@my-mega-project.com```
+
+```ssh deployer@my-mega-project.com```
+
+#### Generate your public key
+
+[How to](https://help.github.com/articles/generating-ssh-keys)
+
+#### Authorize your key on server
 
 ```sh
-cat ~/.ssh/id_rsa.pub | ssh USER@SERVER.COM 'cat >> ~/.ssh/authorized_keys'
+cat ~/.ssh/id_rsa.pub | ssh deployer@my-mega-project.com 'cat >> ~/.ssh/authorized_keys'
 ```
 
-#### Вызов задачи для production окружения
+#### Let's play!
 
 ```sh
-cap ИМЯ_ОКРУЖЕНИЯ ИМЯ_ЗАДАЧИ 
+cap ENV_NAME TASC_NAME
 ```
 
-Например
+For example:
 
 ```sh
 cap production info:image_magick
 ```
 
-#### Проверить доступность удаленного репозитория и создать базовые каталоги (deploy_to, deploy_to/shared, deploy_to/releases)
-
 ```sh
-cap production deploy:check
+cap production info:gemset
 ```
 
-#### Удалить все связаное с приложением сперва выключив веб сервер
+#### Deploy your App
+
+```sh
+cap production deploy
+```
+
+#### Destroy App
+
+Is it ugly? Just destroy it!
+
+Stop Unicorn and destroy.
 
 ```sh
 cap production destroy:soft
 ```
 
-#### Удалить все связаное с приложением
+or destroy file structure right now!
 
 ```sh
 cap production destroy:hard
 ```
+
+### The MIT License (MIT)
+
+Copyright (c) [2013] [Ilya N. Zykin, github/the-teacher]
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
