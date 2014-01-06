@@ -58,7 +58,9 @@ cat ~/.ssh/id_rsa.pub | ssh deployer@my-mega-project.com 'cat >> ~/.ssh/authoriz
 
 #### Extend your nginx config with:
 
-```include /var/www/USER/data/www/MY_APP/shared/web_server/nginx/config;```
+```
+include /var/www/USER/data/www/MY_APP/shared/web_server/nginx/config;
+```
 
 #### Let's play!
 
